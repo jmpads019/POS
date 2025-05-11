@@ -13,8 +13,7 @@ namespace WinFormsAppPOS
             users = new List<User>
             {
                 new User { Username = "admin", Password = "admin123" },
-                new User { Username = "cashier", Password = "cashier" },
-                new User { Username = "manager", Password = "manager" }
+                new User { Username = "cashier", Password = "cashier" }
             };
         }
 

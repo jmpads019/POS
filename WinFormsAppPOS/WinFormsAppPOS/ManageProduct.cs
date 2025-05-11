@@ -17,9 +17,9 @@ namespace WinFormsAppPOS
         public ManageProduct()
         {
             InitializeComponent();
-            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             InitializeDataGrid();
             LoadData();
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
         }
 
         private void ManageProduct_Load(object sender, EventArgs e)
@@ -28,7 +28,10 @@ namespace WinFormsAppPOS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
             dataGridView1.AllowUserToAddRows = false;
+
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged; // Redundant safety hookup
         }
 
         private void InitializeDataGrid()
@@ -37,6 +40,7 @@ namespace WinFormsAppPOS
             dataGridView1.Columns.Add("Name", "Product Name");
             dataGridView1.Columns.Add("Price", "Price");
             dataGridView1.Columns.Add("Stock", "Stock");
+            dataGridView1.Columns.Add("ImagePath", "Image Path");
 
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
@@ -102,6 +106,15 @@ namespace WinFormsAppPOS
                 return;
             }
 
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (!row.IsNewRow && row.Cells[0].Value?.ToString() == txtId.Text.Trim())
+                {
+                    MessageBox.Show("Product ID already exists. Use a unique ID.");
+                    return;
+                }
+            }
+
             dataGridView1.Rows.Add(
                 txtId.Text.Trim(),
                 txtName.Text.Trim(),
@@ -119,14 +132,19 @@ namespace WinFormsAppPOS
             {
                 var row = dataGridView1.SelectedRows[0];
 
-                // Safety check to avoid new row or empty row selection
-                if (row.Index >= 0 && !row.IsNewRow && row.Cells.Count >= 5)
+                txtId.Text = row.Cells[0].Value?.ToString() ?? "";
+                txtName.Text = row.Cells[1].Value?.ToString() ?? "";
+                txtPrice.Text = row.Cells[2].Value?.ToString() ?? "";
+                txtStock.Text = row.Cells[3].Value?.ToString() ?? "";
+
+                string imagePath = row.Cells[4].Value?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
                 {
-                    txtId.Text = row.Cells[0].Value?.ToString() ?? "";
-                    txtName.Text = row.Cells[1].Value?.ToString() ?? "";
-                    txtPrice.Text = row.Cells[2].Value?.ToString() ?? "";
-                    txtStock.Text = row.Cells[3].Value?.ToString() ?? "";
-                    pictureBox1.ImageLocation = row.Cells[4].Value?.ToString() ?? "";
+                    pictureBox1.ImageLocation = imagePath;
+                }
+                else
+                {
+                    pictureBox1.Image = null;  // Clear the image if not found
                 }
             }
         }
@@ -174,6 +192,30 @@ namespace WinFormsAppPOS
             txtPrice.Clear();
             txtStock.Clear();
             pictureBox1.ImageLocation = null;
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var row = dataGridView1.SelectedRows[0];
+
+                if (!row.IsNewRow)
+                {
+                    row.Cells[0].Value = txtId.Text.Trim();
+                    row.Cells[1].Value = txtName.Text.Trim();
+                    row.Cells[2].Value = txtPrice.Text.Trim();
+                    row.Cells[3].Value = txtStock.Text.Trim();
+                    row.Cells[4].Value = pictureBox1.ImageLocation ?? "";
+
+                    SaveAllRowsToFile();
+                    MessageBox.Show("Product updated successfully.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to update.");
+            }
         }
     }
 }

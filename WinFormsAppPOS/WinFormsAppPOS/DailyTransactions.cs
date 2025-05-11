@@ -158,7 +158,7 @@ namespace WinFormsAppPOS
 
                 doc.Save(outputPath);
 
-                MessageBox.Show("Done generating daily report!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Done generating daily report! File Path: " + outputPath, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

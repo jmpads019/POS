@@ -141,7 +141,7 @@ namespace WinFormsAppPOS
                 // Save
                 inventoryDoc.Save(outputPath);
 
-                MessageBox.Show("Done generating inventory report!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Done generating inventory report! File Path: " + outputPath, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

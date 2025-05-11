@@ -134,7 +134,7 @@ namespace WinFormsAppPOS
                 string outputPath = $@"C:\Reports\SalesReport_{currentDateTime}.pdf"; // Set your desired output path
                 doc.Save(outputPath);
 
-                MessageBox.Show("Done generating sales report!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Done generating sales report! File Path: " + outputPath, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

@@ -80,3 +80,4 @@ C:\Users\Jmpads\Music\WinFormsAppPOS\WinFormsAppPOS\obj\Debug\net6.0-windows\ref
 C:\Users\Jmpads\Music\WinFormsAppPOS\WinFormsAppPOS\obj\Debug\net6.0-windows\WinFormsAppPOS.pdb
 C:\Users\Jmpads\Music\WinFormsAppPOS\WinFormsAppPOS\obj\Debug\net6.0-windows\WinFormsAppPOS.genruntimeconfig.cache
 C:\Users\Jmpads\Music\WinFormsAppPOS\WinFormsAppPOS\obj\Debug\net6.0-windows\ref\WinFormsAppPOS.dll
+C:\Users\Jmpads\Music\WinFormsAppPOS\WinFormsAppPOS\obj\Debug\net6.0-windows\WinFormsAppPOS.Payment.resources

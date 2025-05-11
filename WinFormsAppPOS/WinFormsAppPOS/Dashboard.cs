@@ -130,7 +130,7 @@ namespace WinFormsAppPOS
 
         private void DisplayItemsSold()
         {
-            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePath = Path.Combine(Application.StartupPath, "itemsSold.txt");
             int totalItems = 0;
 
             try
@@ -144,7 +144,7 @@ namespace WinFormsAppPOS
                         if (!string.IsNullOrWhiteSpace(line))
                         {
                             string[] parts = line.Split('|');
-                            if (parts.Length >= 4 && int.TryParse(parts[3], out int quantity))
+                            if (parts.Length >= 5 && int.TryParse(parts[4], out int quantity))
                             {
                                 totalItems += quantity;
                             }

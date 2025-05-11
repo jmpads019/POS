@@ -13,8 +13,11 @@ namespace WinFormsAppPOS
 {
     public partial class POS : Form
     {
+        private SearchProducts searchProductsForm;
+        private Payment paymentForm;
         string filePath = Path.Combine(Application.StartupPath, "products.txt");
         string filePathOrder = Path.Combine(Application.StartupPath, "orders.txt");
+        string filePathItemsSold = Path.Combine(Application.StartupPath, "itemsSold.txt");
         int stock;
         int quantity;
         decimal price;
@@ -25,7 +28,38 @@ namespace WinFormsAppPOS
             InitializeComponent();
             InitializeDataGrid();
             LoadData();
+            searchProductsForm = new SearchProducts();
+            searchProductsForm.DataUpdated += RefreshDataGrid;
         }
+
+        private void RefreshDataGrid()
+        {
+            LoadOrders();
+            LoadData();
+        }
+
+        private void LoadOrders()
+        {
+            if (File.Exists(filePathOrder))
+            {
+                var lines = File.ReadAllLines(filePathOrder);
+                dataGridView1.Rows.Clear();
+
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length == 10)
+                    {
+                        dataGridView1.Rows.Add(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Orders file not found.");
+            }
+        }
+
 
         private void POS_Load(object sender, EventArgs e)
         {
@@ -54,6 +88,13 @@ namespace WinFormsAppPOS
             if (!string.IsNullOrEmpty(typedId))
             {
                 LoadProductById(typedId);
+            }
+            else
+            {
+                txtProductName.Clear();
+                txtPrice.Clear();
+                txtQuality.Clear();
+                pictureBox1.ImageLocation = null;
             }
         }
 
@@ -131,49 +172,94 @@ namespace WinFormsAppPOS
 
         private void btnNewTran_Click(object sender, EventArgs e)
         {
-            txtProductID.Clear();
-            txtPrice.Clear();
-            txtQuality.Clear();
-            txtSubTotal.Clear(); 
-            txtProductName.Clear();    
+            // Display confirmation dialog
+            DialogResult result = MessageBox.Show("Are you sure you want to delete all order data?",
+                                                  "Confirm Delete",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Warning);
+
+            // If the user clicked "Yes"
+            if (result == DialogResult.Yes)
+            {
+                // Clear text fields
+                txtProductID.Clear();
+                txtPrice.Clear();
+                txtQuality.Clear();
+                txtSubTotal.Clear();
+                txtProductName.Clear();
+
+                // Clear the contents of orders.txt by writing an empty string
+                string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+
+                if (File.Exists(filePath))
+                {
+                    File.WriteAllText(filePath, string.Empty); // This will delete all content in the file
+                }
+
+                // After clearing the file, reload the DataGridView to reflect changes
+                LoadData();
+
+                // Inform the user that the data has been cleared
+                MessageBox.Show("Order data has been deleted and the DataGridView has been refreshed.",
+                                "Data Cleared",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            }
+            else
+            {
+                // If the user clicked "No", do nothing and just exit the method
+                return;
+            }
         }
 
         private void btnOrder_Click(object sender, EventArgs e)
         {
-            if (quantity > stock)
+            if (txtQuality.Text != null)
             {
-                MessageBox.Show("Available stock: " + stock);
-                txtQuality.Clear();
-            }
+                if (quantity > stock)
+                {
+                    MessageBox.Show("Available stock: " + stock);
+                    txtQuality.Clear();
+                }
 
-            if (string.IsNullOrWhiteSpace(txtProductID.Text) ||
-                string.IsNullOrWhiteSpace(txtProductName.Text) ||
-                string.IsNullOrWhiteSpace(txtPrice.Text) ||
-                string.IsNullOrWhiteSpace(txtQuality.Text) ||
-                string.IsNullOrWhiteSpace(txtSubTotal.Text) ||
-                string.IsNullOrWhiteSpace(txtVAT.Text) ||
-                string.IsNullOrWhiteSpace(txtTotal.Text))
+                if (string.IsNullOrWhiteSpace(txtProductID.Text) ||
+                    string.IsNullOrWhiteSpace(txtProductName.Text) ||
+                    string.IsNullOrWhiteSpace(txtPrice.Text) ||
+                    string.IsNullOrWhiteSpace(txtQuality.Text) ||
+                    string.IsNullOrWhiteSpace(txtSubTotal.Text) ||
+                    string.IsNullOrWhiteSpace(txtVAT.Text) ||
+                    string.IsNullOrWhiteSpace(txtTotal.Text))
+                {
+                    MessageBox.Show("Please fill in all product fields.");
+                    return;
+                }
+
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                dataGridView1.Rows.Add(
+                timestamp,
+                txtProductID.Text.Trim(),
+                    txtProductName.Text.Trim(),
+                    txtPrice.Text.Trim(),
+                    txtQuality.Text.Trim(),
+                    txtSubTotal.Text.Trim(),
+                    txtDiscount.Text.Trim() + "%",
+                    txtVAT.Text.Trim(),
+                    txtTotal.Text.Trim(),
+                    pictureBox1.ImageLocation ?? ""
+                );
+
+                UpdateCartTotals();
+
+                MessageBox.Show("Successfully Added to Cart.");
+
+                UpdateStock(filePath, txtProductID.Text);
+                SaveData();
+            }
+            else
             {
-                MessageBox.Show("Please fill in all product fields.");
-                return;
+                MessageBox.Show("Please input quantity.");
             }
-
-            dataGridView1.Rows.Add(
-            txtProductID.Text.Trim(),
-                txtProductName.Text.Trim(),
-                txtPrice.Text.Trim(),
-                txtQuality.Text.Trim(),
-                txtSubTotal.Text.Trim(),
-                txtDiscount.Text.Trim() + "%",
-                txtVAT.Text.Trim(),
-                txtTotal.Text.Trim(),   
-                pictureBox1.ImageLocation ?? ""
-            );
-
-
-            UpdateStock(filePath, txtProductID.Text);
-            SaveData();
-            txtQuality.Clear();
         }
 
         void UpdateStock(string filePath, string productId)
@@ -198,12 +284,16 @@ namespace WinFormsAppPOS
             File.WriteAllLines(filePath, lines);
         }
 
-
         private void SaveData()
         {
             if (!File.Exists(filePathOrder))
             {
                 File.Create(filePathOrder).Close(); // Creates the file if it doesn't exist
+            }
+
+            if (!File.Exists(filePathItemsSold))
+            {
+                File.Create(filePathItemsSold).Close();
             }
 
             List<string> lines = new List<string>();
@@ -224,6 +314,7 @@ namespace WinFormsAppPOS
 
 
             File.AppendAllText(filePathOrder, line + Environment.NewLine);
+            File.AppendAllText(filePathItemsSold, line + Environment.NewLine);
         }
 
         private void txtDiscount_TextChanged(object sender, EventArgs e)
@@ -246,10 +337,9 @@ namespace WinFormsAppPOS
 
         private void btnSearchProduct_Click(object sender, EventArgs e)
         {
-            SearchProducts obj = new SearchProducts();
-            obj.Dock = DockStyle.Fill;
-            obj.StartPosition = FormStartPosition.CenterScreen;
-            obj.Show();
+            searchProductsForm = new SearchProducts();
+            searchProductsForm.DataUpdated += RefreshDataGrid;
+            searchProductsForm.ShowDialog();
         }
 
         private void LoadData()
@@ -260,6 +350,10 @@ namespace WinFormsAppPOS
                 File.Create(filePathOrder).Close();
             }
 
+            dataGridView1.Rows.Clear();
+
+            decimal cartTotal = 0;
+
             var lines = File.ReadAllLines(filePathOrder);
             foreach (string line in lines)
             {
@@ -267,8 +361,76 @@ namespace WinFormsAppPOS
                 if (parts.Length == 10)
                 {
                     dataGridView1.Rows.Add(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+
+                    if (decimal.TryParse(parts[8], out decimal itemTotal))
+                    {
+                        cartTotal += itemTotal;
+                    }
                 }
             }
+
+            // Calculate VAT and Vatable amount
+            decimal vat = cartTotal * 0.12m;
+            decimal vatable = cartTotal - vat;
+
+            // Update labels
+            lblCartTotal.Text = cartTotal.ToString("N2");
+            lblTotalVat.Text = vat.ToString("N2");
+            lblVatable.Text = vatable.ToString("N2");
+
+            dataGridView1.Refresh();
+        }
+
+        private void UpdateCartTotals()
+        {
+            decimal cartTotal = 0;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[5].Value != null &&
+                    decimal.TryParse(row.Cells[5].Value.ToString(), out decimal itemTotal))
+                {
+                    cartTotal += itemTotal;
+                }
+            }
+
+            decimal vat = cartTotal * 0.12m;
+            decimal vatable = cartTotal - vat;
+
+            lblCartTotal.Text = cartTotal.ToString("N2");
+            lblTotalVat.Text = vat.ToString("N2");
+            lblVatable.Text = vatable.ToString("N2");
+        }
+
+        private void btnPayment_Click(object sender, EventArgs e)
+        {
+            Payment paymentForm = new Payment();
+            paymentForm.DataUpdated += RefreshOrderGrid;
+            paymentForm.ShowDialog();
+        }
+
+        private void RefreshOrderGrid()
+        {
+            // Reload the data from the (now empty or updated) file
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
+
+            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+
+            if (File.Exists(filePath))
+            {
+                var lines = File.ReadAllLines(filePath);
+                foreach (var line in lines)
+                {
+                    string[] parts = line.Split('|');
+                    if (parts.Length >= 9)
+                    {
+                        dataGridView1.Rows.Add(parts); // or custom logic for selecting specific columns
+                    }
+                }
+            }
+
+            UpdateCartTotals();
         }
     }
 }

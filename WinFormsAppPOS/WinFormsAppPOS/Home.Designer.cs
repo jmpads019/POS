@@ -38,7 +38,6 @@
             this.btnGenerateReport = new System.Windows.Forms.Button();
             this.btnPOS = new System.Windows.Forms.Button();
             this.controlPanel = new System.Windows.Forms.Panel();
-            this.btnManageStaff = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnManageProduct = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
@@ -182,7 +181,6 @@
             // controlPanel
             // 
             this.controlPanel.BackColor = System.Drawing.Color.White;
-            this.controlPanel.Controls.Add(this.btnManageStaff);
             this.controlPanel.Controls.Add(this.button1);
             this.controlPanel.Controls.Add(this.btnManageProduct);
             this.controlPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -190,25 +188,6 @@
             this.controlPanel.Name = "controlPanel";
             this.controlPanel.Size = new System.Drawing.Size(258, 50);
             this.controlPanel.TabIndex = 4;
-            // 
-            // btnManageStaff
-            // 
-            this.btnManageStaff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(37)))), ((int)(((byte)(41)))));
-            this.btnManageStaff.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnManageStaff.FlatAppearance.BorderSize = 0;
-            this.btnManageStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnManageStaff.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnManageStaff.ForeColor = System.Drawing.Color.White;
-            this.btnManageStaff.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnManageStaff.Location = new System.Drawing.Point(0, -62);
-            this.btnManageStaff.Name = "btnManageStaff";
-            this.btnManageStaff.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.btnManageStaff.Size = new System.Drawing.Size(258, 53);
-            this.btnManageStaff.TabIndex = 4;
-            this.btnManageStaff.Text = "Manage Staff";
-            this.btnManageStaff.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnManageStaff.UseVisualStyleBackColor = false;
-            this.btnManageStaff.Click += new System.EventHandler(this.btnManageStaff_Click);
             // 
             // button1
             // 
@@ -400,7 +379,6 @@
         private Button btnDashboard;
         private Panel controlPanel;
         private Button button1;
-        private Button btnManageStaff;
         private Button btnManageProduct;
         private Button btnPOS;
         private Panel panelReports;

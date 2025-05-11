@@ -112,7 +112,7 @@
             this.Controls.Add(this.btnGenerateReports);
             this.Controls.Add(this.label1);
             this.Name = "DailyTransactions";
-            this.Text = "DailyTransactions";
+            this.Text = "Daily Transactions";
             this.Load += new System.EventHandler(this.DailyTransactions_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

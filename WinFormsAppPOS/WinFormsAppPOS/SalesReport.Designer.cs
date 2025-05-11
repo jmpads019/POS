@@ -111,7 +111,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "SalesReport";
-            this.Text = "SalesReport";
+            this.Text = "Sales Report";
             this.Load += new System.EventHandler(this.SalesReport_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

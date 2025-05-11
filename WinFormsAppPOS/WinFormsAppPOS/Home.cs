@@ -40,6 +40,16 @@ namespace WinFormsAppPOS
             obj.Dock = DockStyle.Fill;
             obj.StartPosition = FormStartPosition.CenterScreen;
             obj.Show();
+
+            if(loggedInUsername == "cashier")
+            {
+                button1.Visible = false;
+                btnManageProduct.Visible = false;
+                btnGenerateReport.Visible = false;
+                btnSalesReport.Visible = false;
+                btnDailyTransaction.Visible = false;
+                btnInventory.Visible = false;
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -68,12 +78,12 @@ namespace WinFormsAppPOS
         {
             if (expand == false)
             {
-                controlPanel.Height += 109;
+                controlPanel.Height += 50;
                 expand = true;
             }
             else
             {
-                controlPanel.Height -= 109;
+                controlPanel.Height -= 50;
                 expand = false;
             }
         }

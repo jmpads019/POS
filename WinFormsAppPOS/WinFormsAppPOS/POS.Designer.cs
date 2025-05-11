@@ -54,6 +54,14 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
+            this.btnPayment = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblCartTotal = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lblTotalVat = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lblVatable = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -295,11 +303,112 @@
             this.txtTotal.Size = new System.Drawing.Size(86, 23);
             this.txtTotal.TabIndex = 23;
             // 
+            // btnPayment
+            // 
+            this.btnPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.btnPayment.FlatAppearance.BorderSize = 0;
+            this.btnPayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayment.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnPayment.ForeColor = System.Drawing.Color.White;
+            this.btnPayment.Image = ((System.Drawing.Image)(resources.GetObject("btnPayment.Image")));
+            this.btnPayment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPayment.Location = new System.Drawing.Point(670, 154);
+            this.btnPayment.Name = "btnPayment";
+            this.btnPayment.Size = new System.Drawing.Size(145, 30);
+            this.btnPayment.TabIndex = 24;
+            this.btnPayment.Text = "Payment";
+            this.btnPayment.UseVisualStyleBackColor = false;
+            this.btnPayment.Click += new System.EventHandler(this.btnPayment_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.Location = new System.Drawing.Point(832, 339);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(89, 21);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Total Cart";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(918, 339);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(25, 21);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "₱:";
+            // 
+            // lblCartTotal
+            // 
+            this.lblCartTotal.AutoSize = true;
+            this.lblCartTotal.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblCartTotal.Location = new System.Drawing.Point(960, 339);
+            this.lblCartTotal.Name = "lblCartTotal";
+            this.lblCartTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblCartTotal.Size = new System.Drawing.Size(19, 21);
+            this.lblCartTotal.TabIndex = 27;
+            this.lblCartTotal.Text = "0";
+            this.lblCartTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label12.Location = new System.Drawing.Point(832, 369);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(89, 21);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "Total VAT:";
+            // 
+            // lblTotalVat
+            // 
+            this.lblTotalVat.AutoSize = true;
+            this.lblTotalVat.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTotalVat.Location = new System.Drawing.Point(960, 369);
+            this.lblTotalVat.Name = "lblTotalVat";
+            this.lblTotalVat.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblTotalVat.Size = new System.Drawing.Size(19, 21);
+            this.lblTotalVat.TabIndex = 29;
+            this.lblTotalVat.Text = "0";
+            this.lblTotalVat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label14.Location = new System.Drawing.Point(832, 400);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(84, 21);
+            this.label14.TabIndex = 30;
+            this.label14.Text = "VATABLE:";
+            // 
+            // lblVatable
+            // 
+            this.lblVatable.AutoSize = true;
+            this.lblVatable.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblVatable.Location = new System.Drawing.Point(960, 400);
+            this.lblVatable.Name = "lblVatable";
+            this.lblVatable.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblVatable.Size = new System.Drawing.Size(19, 21);
+            this.lblVatable.TabIndex = 31;
+            this.lblVatable.Text = "0";
+            this.lblVatable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // POS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1213, 501);
+            this.Controls.Add(this.lblVatable);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.lblTotalVat);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lblCartTotal);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.btnPayment);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.pictureBox1);
@@ -356,5 +465,13 @@
         private PictureBox pictureBox1;
         private Label label10;
         private TextBox txtTotal;
+        private Button btnPayment;
+        private Label label9;
+        private Label label11;
+        private Label lblCartTotal;
+        private Label label12;
+        private Label lblTotalVat;
+        private Label label14;
+        private Label lblVatable;
     }
 }

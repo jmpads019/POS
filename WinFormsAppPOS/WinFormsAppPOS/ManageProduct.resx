@@ -64,6 +64,15 @@
     <value>94</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAMJJREFUOE9j
+        oCvIKq+2AWEolzSQXVJrnlNa+zG7tPZTblm1BVSYeJBXWqMKNOAJEP8H4q/ZxdV2UCn8IK+szjGntOZ8
+        RmG1dG5xgxZQ84ucktrPRBkA0Vz7FWrrLZghRIUD0M+WQE0foZph+BhQihGiAg/ILqtzBiqG2QzDb7NL
+        G4ygSnADijTnltS4kK0ZaLMrUPE3NM3viNIMAkDFX1A0A6Mqt7TWFipNGKBoBtqcV1xrDJUiDiBp/khW
+        Uh0gwMAAAB6pmMUwKGxoAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAALtJREFUOE9j
