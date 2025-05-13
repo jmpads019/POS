@@ -29,7 +29,7 @@ namespace WinFormsAppPOS
 
         private void DisplayTotalSales()
         {
-            string filePathOrder = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePathOrder = Path.Combine(Application.StartupPath, "itemsSold.txt");
             decimal totalSales = 0;
 
             try
@@ -43,7 +43,7 @@ namespace WinFormsAppPOS
                         if (!string.IsNullOrWhiteSpace(line))
                         {
                             string[] parts = line.Split('|');
-                            if (parts.Length >= 9 && decimal.TryParse(parts[8], out decimal saleAmount))
+                            if (parts.Length >= 10 && decimal.TryParse(parts[9], out decimal saleAmount))
                             {
                                 totalSales += saleAmount;
                             }

@@ -37,12 +37,13 @@ namespace WinFormsAppPOS
             public string Quantity { get; set; }
             public string Total { get; set; }
             public string Discount { get; set; }
+            public string DiscountAmount { get; set; }
             public string FinalPrice { get; set; }
         }
 
         public void LoadData()
         {
-            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePath = Path.Combine(Application.StartupPath, "itemsSold.txt");
             List<SalesOrder> orders = new List<SalesOrder>();
 
             try
@@ -51,7 +52,7 @@ namespace WinFormsAppPOS
                 foreach (var line in lines)
                 {
                     var data = line.Split('|');
-                    if (data.Length >= 9) // Ensure there's enough data
+                    if (data.Length >= 10) // Ensure there's enough data
                     {
                         orders.Add(new SalesOrder
                         {
@@ -61,7 +62,8 @@ namespace WinFormsAppPOS
                             Quantity = data[4],
                             Total = data[5],
                             Discount = data[6],
-                            FinalPrice = data[8]
+                            DiscountAmount = data[7],
+                            FinalPrice = data[9]
                         });
                     }
                 }
@@ -77,7 +79,7 @@ namespace WinFormsAppPOS
 
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
-            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePath = Path.Combine(Application.StartupPath, "itemsSold.txt");
             try
             {
                 // Read all lines from the file
@@ -104,7 +106,7 @@ namespace WinFormsAppPOS
                 yPosition += 30; // Move the y position down after the title
 
                 // Draw column headers
-                gfx.DrawString("ID | Product | Price | Quantity | Total | Discount | Final Price", font, XBrushes.Black, new XPoint(100, yPosition));
+                gfx.DrawString("ID | Product | Price | Quantity | Total | Discount % | Discount Amount | Final Price", font, XBrushes.Black, new XPoint(100, yPosition));
                 yPosition += 20; // Move the y position down after the headers
 
                 // Process each line of the file
@@ -114,7 +116,7 @@ namespace WinFormsAppPOS
                     var data = line.Split('|');
 
                     // Format the data into a string to display in the PDF
-                    string row = $"{data[1]} | {data[2]} | {data[3]} | {data[4]} | {data[5]} | {data[6]} | {data[8]}";
+                    string row = $"{data[1]} | {data[2]} | {data[3]} | {data[4]} | {data[5]} | {data[6]} | {data[7]} | {data[9]}";
 
                     // Draw the data on the PDF
                     gfx.DrawString(row, font, XBrushes.Black, new XPoint(100, yPosition));

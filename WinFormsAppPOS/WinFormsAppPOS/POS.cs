@@ -17,12 +17,12 @@ namespace WinFormsAppPOS
         private Payment paymentForm;
         string filePath = Path.Combine(Application.StartupPath, "products.txt");
         string filePathOrder = Path.Combine(Application.StartupPath, "orders.txt");
-        string filePathItemsSold = Path.Combine(Application.StartupPath, "itemsSold.txt");
         int stock;
         int quantity;
         decimal price;
         decimal subTotal;
         decimal vatRate = 0.12m;
+        decimal txtdiscountAmount = 0;
         public POS()
         {
             InitializeComponent();
@@ -48,7 +48,7 @@ namespace WinFormsAppPOS
                 foreach (var line in lines)
                 {
                     var parts = line.Split('|');
-                    if (parts.Length == 10)
+                    if (parts.Length == 11)
                     {
                         dataGridView1.Rows.Add(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]);
                     }
@@ -75,7 +75,8 @@ namespace WinFormsAppPOS
             dataGridView1.Columns.Add("Price", "Price");
             dataGridView1.Columns.Add("Quantity", "Quantity");
             dataGridView1.Columns.Add("Subtotal", "Subtotal");
-            dataGridView1.Columns.Add("Discount", "Discount");
+            dataGridView1.Columns.Add("Discount", "Discount %");
+            dataGridView1.Columns.Add("Discount Amount", "Discount");
             dataGridView1.Columns.Add("VAT", "VAT");
             dataGridView1.Columns.Add("Total", "Total");
 
@@ -161,7 +162,7 @@ namespace WinFormsAppPOS
             decimal vatAmount = discountedPrice * vatRate;
             decimal totalWithVAT = discountedPrice + vatAmount;
 
-            txtTotal.Text = totalWithVAT.ToString("F2");
+            txtTotal.Text = discountedPrice.ToString("F2");
             txtVAT.Text = vatRate * 100 + "%";
         }
 
@@ -244,6 +245,7 @@ namespace WinFormsAppPOS
                     txtQuality.Text.Trim(),
                     txtSubTotal.Text.Trim(),
                     txtDiscount.Text.Trim() + "%",
+                    txtdiscountAmount.ToString(),
                     txtVAT.Text.Trim(),
                     txtTotal.Text.Trim(),
                     pictureBox1.ImageLocation ?? ""
@@ -255,6 +257,7 @@ namespace WinFormsAppPOS
 
                 UpdateStock(filePath, txtProductID.Text);
                 SaveData();
+                RefreshDataGrid();
             }
             else
             {
@@ -291,11 +294,6 @@ namespace WinFormsAppPOS
                 File.Create(filePathOrder).Close(); // Creates the file if it doesn't exist
             }
 
-            if (!File.Exists(filePathItemsSold))
-            {
-                File.Create(filePathItemsSold).Close();
-            }
-
             List<string> lines = new List<string>();
 
             string dateTimeNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -305,16 +303,15 @@ namespace WinFormsAppPOS
             string quality = txtQuality.Text;
             string subtotal = txtSubTotal.Text;
             string discount = txtDiscount.Text + "%";
+            string strDiscountAmount = txtdiscountAmount.ToString();
             string vat = txtVAT.Text;
             string total = txtTotal.Text;   
             string imagePath = pictureBox1.ImageLocation;
 
-            string line = string.Join("|", dateTimeNow, id, name, price, quality, subTotal, discount, vat, total,imagePath);
+            string line = string.Join("|", dateTimeNow, id, name, price, quality, subTotal, discount, strDiscountAmount, vat, total,imagePath);
             lines.Add(line);
 
-
             File.AppendAllText(filePathOrder, line + Environment.NewLine);
-            File.AppendAllText(filePathItemsSold, line + Environment.NewLine);
         }
 
         private void txtDiscount_TextChanged(object sender, EventArgs e)
@@ -332,7 +329,8 @@ namespace WinFormsAppPOS
             decimal vatAmount = discountedPrice * vatRate;
             decimal totalWithVAT = discountedPrice + vatAmount;
 
-            txtTotal.Text = totalWithVAT.ToString("F2");
+            txtdiscountAmount = discountAmount;
+            txtTotal.Text = discountedPrice.ToString("F2");
         }
 
         private void btnSearchProduct_Click(object sender, EventArgs e)
@@ -353,18 +351,24 @@ namespace WinFormsAppPOS
             dataGridView1.Rows.Clear();
 
             decimal cartTotal = 0;
+            decimal totalDiscountAmount = 0;
 
             var lines = File.ReadAllLines(filePathOrder);
             foreach (string line in lines)
             {
                 var parts = line.Split('|');
-                if (parts.Length == 10)
+                if (parts.Length == 11)
                 {
-                    dataGridView1.Rows.Add(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
+                    dataGridView1.Rows.Add(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]);
 
-                    if (decimal.TryParse(parts[8], out decimal itemTotal))
+                    if (decimal.TryParse(parts[9], out decimal itemTotal))
                     {
                         cartTotal += itemTotal;
+                    }
+
+                    if (decimal.TryParse(parts[7], out decimal itemTotalDiscount))
+                    {
+                        totalDiscountAmount += itemTotalDiscount;
                     }
                 }
             }
@@ -372,11 +376,15 @@ namespace WinFormsAppPOS
             // Calculate VAT and Vatable amount
             decimal vat = cartTotal * 0.12m;
             decimal vatable = cartTotal - vat;
+            decimal discount = totalDiscountAmount;
+            decimal grandTotal = cartTotal - totalDiscountAmount;
 
             // Update labels
             lblCartTotal.Text = cartTotal.ToString("N2");
             lblTotalVat.Text = vat.ToString("N2");
             lblVatable.Text = vatable.ToString("N2");
+            lblDiscountAmount.Text = discount.ToString("N2");
+            lblGrandTotal.Text = grandTotal.ToString("N2");
 
             dataGridView1.Refresh();
         }
@@ -384,6 +392,7 @@ namespace WinFormsAppPOS
         private void UpdateCartTotals()
         {
             decimal cartTotal = 0;
+            decimal totalDiscountAmount = 0;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -392,14 +401,24 @@ namespace WinFormsAppPOS
                 {
                     cartTotal += itemTotal;
                 }
+
+                if (row.Cells[7].Value != null && 
+                    decimal.TryParse(row.Cells[7].Value.ToString(), out decimal itemTotalDiscount))
+                {
+                    totalDiscountAmount += itemTotalDiscount;
+                }
             }
 
             decimal vat = cartTotal * 0.12m;
             decimal vatable = cartTotal - vat;
+            decimal discount = totalDiscountAmount;
+            decimal grandTotal = cartTotal - totalDiscountAmount;
 
             lblCartTotal.Text = cartTotal.ToString("N2");
             lblTotalVat.Text = vat.ToString("N2");
             lblVatable.Text = vatable.ToString("N2");
+            lblDiscountAmount.Text = discount.ToString("N2");
+            lblGrandTotal.Text = grandTotal.ToString("N2");
         }
 
         private void btnPayment_Click(object sender, EventArgs e)
@@ -430,6 +449,47 @@ namespace WinFormsAppPOS
                 }
             }
 
+            UpdateCartTotals();
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an item to remove.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Confirm removal
+            DialogResult result = MessageBox.Show("Are you sure you want to remove the selected item?", "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+
+            // Get selected row
+            var selectedRow = dataGridView1.SelectedRows[0];
+            string date = selectedRow.Cells[0].Value.ToString();
+            string productId = selectedRow.Cells[1].Value.ToString();
+
+            // Remove from DataGridView
+            dataGridView1.Rows.Remove(selectedRow);
+
+            // Remove from orders.txt
+            string[] allLines = File.ReadAllLines(filePathOrder);
+            List<string> updatedLines = new List<string>();
+
+            foreach (var line in allLines)
+            {
+                var parts = line.Split('|');
+                if (parts.Length >= 2 && !(parts[0] == date && parts[1] == productId))
+                {
+                    updatedLines.Add(line);
+                }
+            }
+
+            File.WriteAllLines(filePathOrder, updatedLines);
+
+            MessageBox.Show("Item removed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Recalculate totals
             UpdateCartTotals();
         }
     }

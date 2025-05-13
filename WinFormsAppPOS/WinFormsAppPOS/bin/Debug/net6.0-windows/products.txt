@@ -1,1 +1,1 @@
-1|Iphone 16 pro max|75000|30|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg
+1|Iphone 16 pro max|75000|84|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg

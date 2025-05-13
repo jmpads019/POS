@@ -123,6 +123,7 @@ namespace WinFormsAppPOS
                 pictureBox1.ImageLocation ?? ""
             );
 
+            MessageBox.Show("Product Added Successfully.");
             SaveData();
         }
 

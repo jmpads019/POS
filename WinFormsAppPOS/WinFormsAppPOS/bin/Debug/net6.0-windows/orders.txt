@@ -1,5 +1,0 @@
-2025-05-12 01:05:53|1|Iphone 16 pro max|75000|1|75000|%|12.00%|84000.00|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg
-2025-05-12 01:07:15|1|Iphone 16 pro max|75000|1|75000|%|12.00%|84000.00|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg
-2025-05-12 01:08:05|1|Iphone 16 pro max|75000|2|150000|%|12.00%|168000.00|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg
-2025-05-12 01:09:56|1|Iphone 16 pro max|75000|1|75000|%|12.00%|84000.00|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg
-2025-05-12 01:10:08|1|Iphone 16 pro max|75000|4|300000|%|12.00%|336000.00|C:\Users\Jmpads\source\repos\WinFormsAppPOS\WinFormsAppPOS\Resources\iphone 16 pro max product image.jpg

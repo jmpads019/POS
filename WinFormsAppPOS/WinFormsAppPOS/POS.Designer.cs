@@ -62,6 +62,12 @@
             this.lblTotalVat = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblVatable = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lblDiscountAmount = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
+            this.btnRemove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -190,7 +196,7 @@
             this.btnNewTran.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNewTran.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnNewTran.ForeColor = System.Drawing.Color.White;
-            this.btnNewTran.Location = new System.Drawing.Point(102, 154);
+            this.btnNewTran.Location = new System.Drawing.Point(181, 154);
             this.btnNewTran.Name = "btnNewTran";
             this.btnNewTran.Size = new System.Drawing.Size(145, 30);
             this.btnNewTran.TabIndex = 12;
@@ -326,9 +332,9 @@
             this.label9.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label9.Location = new System.Drawing.Point(832, 339);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 21);
+            this.label9.Size = new System.Drawing.Size(77, 21);
             this.label9.TabIndex = 25;
-            this.label9.Text = "Total Cart";
+            this.label9.Text = "Subtotal";
             // 
             // label11
             // 
@@ -396,11 +402,84 @@
             this.lblVatable.Text = "0";
             this.lblVatable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label13.Location = new System.Drawing.Point(832, 431);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(82, 21);
+            this.label13.TabIndex = 32;
+            this.label13.Text = "Discount:";
+            // 
+            // lblDiscountAmount
+            // 
+            this.lblDiscountAmount.AutoSize = true;
+            this.lblDiscountAmount.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblDiscountAmount.Location = new System.Drawing.Point(960, 431);
+            this.lblDiscountAmount.Name = "lblDiscountAmount";
+            this.lblDiscountAmount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblDiscountAmount.Size = new System.Drawing.Size(19, 21);
+            this.lblDiscountAmount.TabIndex = 33;
+            this.lblDiscountAmount.Text = "0";
+            this.lblDiscountAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label15.Location = new System.Drawing.Point(832, 458);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(186, 21);
+            this.label15.TabIndex = 34;
+            this.label15.Text = "______________________";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(834, 492);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(103, 19);
+            this.label16.TabIndex = 35;
+            this.label16.Text = "Grand Total:";
+            // 
+            // lblGrandTotal
+            // 
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblGrandTotal.Location = new System.Drawing.Point(960, 492);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblGrandTotal.Size = new System.Drawing.Size(18, 19);
+            this.lblGrandTotal.TabIndex = 36;
+            this.lblGrandTotal.Text = "0";
+            this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRemove.FlatAppearance.BorderSize = 0;
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnRemove.Image")));
+            this.btnRemove.Location = new System.Drawing.Point(102, 154);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(73, 30);
+            this.btnRemove.TabIndex = 37;
+            this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
             // POS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1213, 501);
+            this.ClientSize = new System.Drawing.Size(1213, 571);
+            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.lblGrandTotal);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.lblDiscountAmount);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.lblVatable);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.lblTotalVat);
@@ -473,5 +552,11 @@
         private Label lblTotalVat;
         private Label label14;
         private Label lblVatable;
+        private Label label13;
+        private Label lblDiscountAmount;
+        private Label label15;
+        private Label label16;
+        private Label lblGrandTotal;
+        private Button btnRemove;
     }
 }

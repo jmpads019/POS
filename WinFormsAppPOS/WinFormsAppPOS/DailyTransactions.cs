@@ -31,13 +31,14 @@ namespace WinFormsAppPOS
             public string Quantity { get; set; }
             public string SubTotal { get; set; }
             public string Discount { get; set; }
+            public string DiscountAmount { get; set; }
             public string VAT { get; set; }
             public string Total { get; set; }
         }
 
         public void LoadData()
         {
-            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePath = Path.Combine(Application.StartupPath, "itemsSold.txt");
             List<DailyReport> orders = new List<DailyReport>();
 
             try
@@ -46,7 +47,7 @@ namespace WinFormsAppPOS
                 foreach (var line in lines)
                 {
                     var data = line.Split('|');
-                    if (data.Length >= 9) // Ensure there's enough data
+                    if (data.Length >= 10) // Ensure there's enough data
                     {
                         orders.Add(new DailyReport
                         {
@@ -57,8 +58,9 @@ namespace WinFormsAppPOS
                             Quantity = data[4],
                             SubTotal = data[5],
                             Discount = data[6],
-                            VAT = data[7],
-                            Total = data[8],
+                            DiscountAmount = data[7],
+                            VAT = data[8],
+                            Total = data[9],
                         });
                     }
                 }
@@ -74,7 +76,7 @@ namespace WinFormsAppPOS
 
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
-            string filePath = Path.Combine(Application.StartupPath, "orders.txt");
+            string filePath = Path.Combine(Application.StartupPath, "itemsSold.txt");
 
             try
             {
@@ -121,7 +123,7 @@ namespace WinFormsAppPOS
                 y += 30;
 
                 // Column headers
-                gfx.DrawString("Date | Product | Price | Qty | Subtotal | Discount | VAT | Total", textFont, XBrushes.Black, new XPoint(40, y));
+                gfx.DrawString("Date | Product | Price | Qty | Subtotal | Discount % | Discount Amount | VAT | Total", textFont, XBrushes.Black, new XPoint(40, y));
                 y += 20;
 
                 foreach (var data in todayTransactions)
@@ -132,10 +134,11 @@ namespace WinFormsAppPOS
                     string qty = data[4];
                     string subtotal = $"₱{int.Parse(data[5]):N2}";
                     string discount = data[6];
-                    string vat = data[7];
-                    string total = $"₱{double.Parse(data[8]):N2}";
+                    string discountAmount = $"₱{double.Parse(data[7]):N2}";
+                    string vat = data[8];
+                    string total = $"₱{double.Parse(data[9]):N2}";
 
-                    string row = $"{time} | {product} | {price} | {qty} | {subtotal} | {discount} | {vat} | {total}";
+                    string row = $"{time} | {product} | {price} | {qty} | {subtotal} | {discount} | {discountAmount} | {vat} | {total}";
 
                     gfx.DrawString(row, textFont, XBrushes.Black, new XPoint(40, y));
                     y += 20;

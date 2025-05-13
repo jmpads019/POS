@@ -98,6 +98,7 @@ namespace WinFormsAppPOS
                     quantity = 1;
                 }
 
+                decimal discountAmount = 0;
                 decimal productPrice = decimal.Parse(price);
                 decimal subtotal = productPrice * quantity;
 
@@ -112,15 +113,15 @@ namespace WinFormsAppPOS
 
                 string imagePath = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
 
-                AddToOrderFile(timestamp, productId, productName, price, quantity.ToString(), subtotal.ToString(), discount, "12.00%", totalPrice.ToString(), imagePath);
+                AddToOrderFile(timestamp, productId, productName, price, quantity.ToString(), subtotal.ToString(), discount, discountAmount.ToString(), "12.00%", totalPrice.ToString(), imagePath);
 
                 DataUpdated?.Invoke();
             }
         }
 
-        private void AddToOrderFile(string timestamp, string productId, string productName, string price, string quantity, string subtotal, string discount, string tax, string totalPrice, string imagePath)
+        private void AddToOrderFile(string timestamp, string productId, string productName, string price, string quantity, string subtotal, string discount, string discountAmount, string tax, string totalPrice, string imagePath)
         {
-            string orderDetails = $"{timestamp}|{productId}|{productName}|{price}|{quantity}|{subtotal}|{discount}|{tax}|{totalPrice}|{imagePath}";
+            string orderDetails = $"{timestamp}|{productId}|{productName}|{price}|{quantity}|{subtotal}|{discount}|{discountAmount}|{tax}|{totalPrice}|{imagePath}";
 
             try
             {

@@ -32,13 +32,16 @@
             this.txtPayment = new System.Windows.Forms.TextBox();
             this.txtBalance = new System.Windows.Forms.TextBox();
             this.btnPayment = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtTotal
             // 
             this.txtTotal.Enabled = false;
             this.txtTotal.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTotal.Location = new System.Drawing.Point(14, 12);
+            this.txtTotal.Location = new System.Drawing.Point(117, 12);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtTotal.Size = new System.Drawing.Size(300, 33);
@@ -47,7 +50,7 @@
             // txtPayment
             // 
             this.txtPayment.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtPayment.Location = new System.Drawing.Point(14, 51);
+            this.txtPayment.Location = new System.Drawing.Point(117, 51);
             this.txtPayment.Name = "txtPayment";
             this.txtPayment.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPayment.Size = new System.Drawing.Size(300, 33);
@@ -59,11 +62,12 @@
             // 
             this.txtBalance.Enabled = false;
             this.txtBalance.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtBalance.Location = new System.Drawing.Point(14, 90);
+            this.txtBalance.Location = new System.Drawing.Point(117, 90);
             this.txtBalance.Name = "txtBalance";
             this.txtBalance.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtBalance.Size = new System.Drawing.Size(300, 33);
             this.txtBalance.TabIndex = 2;
+            this.txtBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnPayment
             // 
@@ -74,17 +78,47 @@
             this.btnPayment.ForeColor = System.Drawing.Color.White;
             this.btnPayment.Location = new System.Drawing.Point(14, 154);
             this.btnPayment.Name = "btnPayment";
-            this.btnPayment.Size = new System.Drawing.Size(298, 53);
+            this.btnPayment.Size = new System.Drawing.Size(403, 53);
             this.btnPayment.TabIndex = 3;
             this.btnPayment.Text = "Enter";
             this.btnPayment.UseVisualStyleBackColor = false;
             this.btnPayment.Click += new System.EventHandler(this.btnPayment_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(2, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 17);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Total:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Enter Amount:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 100);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 17);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Change:";
+            // 
             // Payment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 219);
+            this.ClientSize = new System.Drawing.Size(429, 219);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnPayment);
             this.Controls.Add(this.txtBalance);
             this.Controls.Add(this.txtPayment);
@@ -93,6 +127,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Payment";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Payment";
             this.Load += new System.EventHandler(this.Payment_Load);
             this.ResumeLayout(false);
@@ -106,5 +141,8 @@
         private TextBox txtPayment;
         private TextBox txtBalance;
         private Button btnPayment;
+        private Label label1;
+        private Label label2;
+        private Label label3;
     }
 }
