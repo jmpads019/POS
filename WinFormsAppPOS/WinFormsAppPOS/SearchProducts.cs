@@ -163,7 +163,37 @@ namespace WinFormsAppPOS
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-   
+            string searchText = txtSearch.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                LoadData(); // Load all data if search box is empty
+                return;
+            }
+        
+            if (!File.Exists(filePath))
+            {
+                MessageBox.Show("Product file not found.");
+                return;
+            }
+        
+            dataGridView1.Rows.Clear();
+        
+            var lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                var parts = line.Split('|');
+                if (parts.Length == 5)
+                {
+                    string productName = parts[1].ToLower();
+                    if (productName.Contains(searchText))
+                    {
+                        dataGridView1.Rows.Add(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                    }
+                }
+            }
+        
+            dataGridView1.Refresh();
         }
     }
 }
